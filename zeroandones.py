@@ -3,6 +3,7 @@ def main():
     state, prev, word = None, None, None
     nlist = []
 
+    # group up ones with ones and zeroes with zeroes
     for element in zlist:
         state = element == '0'
         if prev != state:
@@ -11,23 +12,20 @@ def main():
         word += element
         prev = state
 
-    nlist = nlist[1:] + [word]  # append final word,remove initial word
+    nlist = nlist[1:] + [word]
+    # append final word,remove initial word
 
-    if len(nlist) % 2 == 0:
-        hlist = []
-        klist = [nlist[i: i + 2] for i in range(0, len(nlist) - 2, 2)]
-    else:
-        hlist = [nlist[i: i + 2] for i in range(0, len(nlist) - 2, 2)]
-        klist = [nlist[i: i + 2] for i in range(1, len(nlist), 2)]
-        # we can get rid of the first and last elements in this case
+
+    hlist = [nlist[i: i + 2] for i in range(0, len(nlist), 2)]
+    klist = [[nlist[0]]] + [nlist[i: i + 2] for i in range(1, len(nlist), 2)] if len(nlist)% 2 !=0 else []
 
     max = 0
-    for lst in [hlist,klist]:
+    #sneaking suspicion this can be done with either list comp or reduce
+    for lst in [hlist, klist]:
         for element in lst:
-            if len(element) == 2:
-                consec = min(len(element[0]), len(element[1]))
-                if max < consec:
-                    max = consec
+            consec = min(list(map(len,element)))
+            if max < consec:
+                max = consec
 
     print(max)
 
