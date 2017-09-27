@@ -1,33 +1,24 @@
-
 def main():
-    zlist = list(input('zeroes and ones?'))
-    state, prev, word = None, None, None
-    nlist = []
+    intlist = list(input('zeroes and ones?'))
+    state, prev, num, lenlist = None, None, 0, []
 
     # group up ones with ones and zeroes with zeroes
-    for element in zlist:
+    for element in intlist:
         state = element == '0'
         if prev != state:
-            nlist.append(word)
-            word = ''
-        word += element
+            lenlist.append(num)
+            num = 0
+        num += 1
         prev = state
 
-    # append final word,remove initial word
-    nlist = nlist[1:] + [word]
+    # append final num,remove initial num
+    lenlist = lenlist[1:] + [num]
 
+    pairlist = [lenlist[i: i + 2] for i in range(0, len(lenlist), 2)]
+    pairlist += [[lenlist[0]]] + [lenlist[i: i + 2] for i in range(1, len(lenlist), 2)] if len(lenlist) % 2 != 0 else []
 
-    hlist = [nlist[i: i + 2] for i in range(0, len(nlist), 2)]
-    klist = [[nlist[0]]] + [nlist[i: i + 2] for i in range(1, len(nlist), 2)] if len(nlist)% 2 !=0 else klist
-
-    #find the max accros the mins across the pairs of the elements of these two lists
-    jax = 0
-    #sneaking suspicion this can be done with either list comp or reduce
-    #effeciency or brevity??
-    #brevity!! (at least for this challenge)
-    for lst in [hlist, klist]:
-        minlist=list(map(min,[list(map(len,element)) for element in lst]))
-        jax=max(max(minlist),jax)
+    # find the max across the mins across the pairs of the elements of these two lists
+    jax = max(list(map(min, pairlist)))
     print(jax)
 
 
