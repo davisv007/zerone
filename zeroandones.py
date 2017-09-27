@@ -18,7 +18,7 @@ def main():
                [lenlist[i: i + 2] for i in range(1, len(lenlist), 2)]
 
     # find the max across the mins across the pairs of the elements of these two lists
-    jax = max(list(map(min, [element for element in pairlist if len(element) == 2])))
+    jax = max(list(map(min, [pair for pair in pairlist if len(pair) == 2])))
     print(jax)
 
 
