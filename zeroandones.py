@@ -10,6 +10,9 @@ def main():
     numbergenerator = nummer(intlist)
     groupgenerator = grouper(numbergenerator)
     print(next(groupgenerator))
+    print('burp')
+    print(next(groupgenerator))
+    print(next(groupgenerator))
     print(next(groupgenerator))
     # print(next(groupgenerator))
     # print(next(groupgenerator))
@@ -37,24 +40,24 @@ def minner(grouper):
         prevmin = current
 
 
-def grouper(nummer):git 
+def grouper(nummer):
     num=0
-    firstpass=True
-    prevele = 'p'
+    current = next(nummer)
+    prevele = current
     while True:
         try:
-            current = next(nummer)
+            while current ==prevele:
+                prevele=current
+                current=next(nummer)
+                num+=1
+            else:
+                yield num
+                num=1
+                prevele=current
+                current=next(nummer)
+
         except StopIteration:
             yield num
-        if firstpass:
-            continue
-        else:
-            if current !=prevele:
-                yield num
-                num = 0
-        prevele = current
-        num+=1
-        firstpass=False
 
 
 
