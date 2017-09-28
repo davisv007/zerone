@@ -3,28 +3,31 @@ def main():
     numbergenerator = nummer(intlist)
     groupgenerator = grouper(numbergenerator)
     mingenerator = minner(groupgenerator)
-    maxgenerator = maxer(mingenerator)
+    answergenerator = maxer(mingenerator)
 
-    print(max([x for x in maxgenerator]))
+    print(next(answergenerator))
 
 def nummer(intlist):
     yield from iter(intlist)
 
 
 def maxer(minner):
-    prevmax = next(minner)
-    while True:
-        current = next(minner)
-        yield max(current, prevmax)
-        prevmax = current
+    current=0
+    for element in minner:
+        current = max(current,element)
+    yield current
 
 
 def minner(grouper):
     prevmin = next(grouper)
     while True:
-        current = next(grouper)
-        yield min(prevmin, current)
-        prevmin = current
+        try:
+            current = next(grouper)
+            yield min(prevmin, current)
+            prevmin = current
+        except:
+            yield prevmin
+            return
 
 
 def grouper(nummer):
@@ -34,16 +37,17 @@ def grouper(nummer):
     while True:
         try:
             while current == prevele:
+                num += 1
                 prevele = current
                 current = next(nummer)
-                num += 1
             else:
                 yield num
                 num = 1
                 prevele = current
                 current = next(nummer)
         except StopIteration:
-            return num
+            yield num
+            return
 
 
 main()
