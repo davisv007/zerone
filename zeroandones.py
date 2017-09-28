@@ -1,7 +1,4 @@
-def main():
-    intlist = list(input('zeroes and ones?'))
-    state, prev, num, lenlist = None, None, 0, []
-
+def main(intlist=list(input('zeroes and ones?')), state=None, prev=None, num=0, lenlist=[]):
     # create list of lengths of consecutive zeroes and ones
     for element in intlist:
         state = element == '0'
@@ -14,12 +11,10 @@ def main():
     # append final num,remove initial 0
     lenlist = lenlist[1:] + [num]
 
-    pairlist = [lenlist[i: i + 2] for i in range(0, len(lenlist), 2)] + \
-               [lenlist[i: i + 2] for i in range(1, len(lenlist), 2)]
+    pairlist = zip(lenlist, lenlist[1:]) + zip((lenlist[1:], lenlist[2:]))
 
     # find the max across the mins across the pairs of the elements of these two lists
-    jax = max(list(map(min, [pair for pair in pairlist if len(pair) == 2])))
-    print(jax)
+    print(max(list(map(min, [pair for pair in pairlist if len(pair) == 2]))))
 
 
 main()
