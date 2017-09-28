@@ -1,25 +1,49 @@
-def main():
-    intlist = list(input('zeroes and ones?'))
-    state, prev, num, lenlist = None, None, 0, []
+prevmin = 0
+prevmax = 0
 
-    # create list of lengths of consecutive zeroes and ones
-    for element in intlist:
+state = None
+lenlist = None
+
+
+def main():
+    intlist = input('zeroes and ones?')
+    numbergenerator = nummer(intlist)
+    groupgenerator = grouper(numbergenerator)
+    mingenerator = minner(groupgeneratogitr)
+    maxgenerator = maxer(mingenerator)
+
+
+def nummer(intlist):
+    yield from iter(intlist)
+
+
+def maxer(minner):
+    prevmax = 0
+    while True:
+        current = next(minner)
+        yield max(current, prevmax)
+        prevmax = current
+
+
+def minner(grouper):
+    prevmin = 0
+    while True:
+        current = next(grouper)
+        yield min(prevmin, current)
+        prevmin = current
+
+
+def grouper(nummer):
+    num = 0
+    prevele = None
+    while True:
+        element = next(nummer)
         state = element == '0'
-        if prev != state:
-            lenlist.append(num)
+        if prevele != state:
+            yield num
             num = 0
         num += 1
-        prev = state
-
-    # append final num,remove initial 0
-    lenlist = lenlist[1:] + [num]
-
-    pairlist = [lenlist[i: i + 2] for i in range(0, len(lenlist), 2)] + \
-               [lenlist[i: i + 2] for i in range(1, len(lenlist), 2)]
-
-    # find the max across the mins across the pairs of the elements of these two lists
-    jax = max(list(map(min, [pair for pair in pairlist if len(pair) == 2])))
-    print(jax)
+        prevele = state
 
 
 main()
