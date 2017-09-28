@@ -31,7 +31,6 @@ def grouper(nummer):
     num = 0
     current = next(nummer)
     prevele = current
-    fails = 0
     while True:
         try:
             while current == prevele:
