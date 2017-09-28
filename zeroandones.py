@@ -9,8 +9,12 @@ def main():
     intlist = input('zeroes and ones?')
     numbergenerator = nummer(intlist)
     groupgenerator = grouper(numbergenerator)
-    mingenerator = minner(groupgeneratogitr)
-    maxgenerator = maxer(mingenerator)
+    print(next(groupgenerator))
+    print(next(groupgenerator))
+    # print(next(groupgenerator))
+    # print(next(groupgenerator))
+    # mingenerator = minner(groupgeneratogitr)
+    # maxgenerator = maxer(mingenerator)
 
 
 def nummer(intlist):
@@ -33,17 +37,25 @@ def minner(grouper):
         prevmin = current
 
 
-def grouper(nummer):
-    num = 0
-    prevele = None
+def grouper(nummer):git 
+    num=0
+    firstpass=True
+    prevele = 'p'
     while True:
-        element = next(nummer)
-        state = element == '0'
-        if prevele != state:
+        try:
+            current = next(nummer)
+        except StopIteration:
             yield num
-            num = 0
-        num += 1
-        prevele = state
+        if firstpass:
+            continue
+        else:
+            if current !=prevele:
+                yield num
+                num = 0
+        prevele = current
+        num+=1
+        firstpass=False
+
 
 
 main()
