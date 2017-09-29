@@ -1,11 +1,11 @@
 def main():
     intlist = input('zeroes and ones?')
-    numbergenerator = nummer(intlist)
-    groupgenerator = grouper(numbergenerator)
-    mingenerator = minner(groupgenerator)
-    answergenerator = maxer(mingenerator)
+    number_generator = nummer(intlist)
+    group_generator = grouper(number_generator)
+    minimum_generator = minner(group_generator)
+    answer_generator = maxer(minimum_generator)
 
-    print(next(answergenerator))
+    print(next(answer_generator))
 
 
 def nummer(intlist):
