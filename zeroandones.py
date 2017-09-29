@@ -7,14 +7,15 @@ def main():
 
     print(next(answergenerator))
 
+
 def nummer(intlist):
     yield from iter(intlist)
 
 
 def maxer(minner):
-    current=0
+    current = 0
     for element in minner:
-        current = max(current,element)
+        current = max(current, element)
     yield current
 
 
@@ -34,6 +35,7 @@ def grouper(nummer):
     num = 0
     current = next(nummer)
     prevele = current
+    released = False
     while True:
         try:
             while current == prevele:
@@ -42,12 +44,17 @@ def grouper(nummer):
                 current = next(nummer)
             else:
                 yield num
+                released = True
                 num = 1
                 prevele = current
                 current = next(nummer)
         except StopIteration:
-            yield num
-            return
+            if released:
+                yield num
+                return
+            else:
+                yield 0
+                return
 
 
 main()
